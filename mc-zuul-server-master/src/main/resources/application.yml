@@ -1,0 +1,27 @@
+## YAML Template.
+---
+spring:
+    application:
+        name: api-gateway
+    sleuth:
+        sampler.percentage: 0.2
+        web.skipPattern: (^cleanup.*)
+
+server:
+    port: 8079
+
+zuul:
+    routes:
+        orders:            
+            service-id: order-service
+            path: /orders/**
+            stripPrefix: true
+        customers:            
+            service-id: customer-service
+            path: /customers/**      
+            stripPrefix: true
+            
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: http://localhost:8761/eureka
