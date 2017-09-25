@@ -1,0 +1,31 @@
+## YAML Template.
+---
+spring:
+    application:
+        name: customer-service
+    h2.console:
+        enabled: true
+        path: /h2
+        settings.web-allow-others: true
+    datasource:
+        url: jdbc:h2:file:~/customers-db
+        username: sa
+        password: 
+        driver-class-name: org.h2.Driver
+    sleuth:
+        sampler.percentage: 0.2
+        web.skipPattern: (^cleanup.*)
+server:
+  port: 2222
+
+eureka:
+  instance:
+      instanceId: ${spring.application.name}:${random.value}
+      ## this should not be enabled on production
+      leaseRenewalIntervalInSeconds: 5
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+logging:
+    file: myapplication.log   
